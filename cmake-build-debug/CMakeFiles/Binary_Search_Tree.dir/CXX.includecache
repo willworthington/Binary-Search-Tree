@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/willworthington/CLionProjects/Binary Search Tree/BST312.h
+cstdlib
+-
+iostream
+-
+vector
+-
+
+C:/Users/willworthington/CLionProjects/Binary Search Tree/main.cpp
+iostream
+-
+fstream
+-
+BST312.h
+C:/Users/willworthington/CLionProjects/Binary Search Tree/BST312.h
+
