@@ -292,18 +292,28 @@ template<class ItemType>
 void BST_312 <ItemType>::insertItem(TreeNode*& t, const ItemType& newItem)
 {
     //YOUR CODE GOES HERE *******************************************************************************
-    if (newItem < t->data){
+    if (t==NULL){
+        TreeNode *temp = new TreeNode;
+        temp->left = temp->right = NULL;
+        temp->data = newItem;
+        t = temp;
+    }
+    else if (newItem < t->data){
         if (t->left==NULL){
             TreeNode *temp = new TreeNode;
             temp->data = newItem;
-            
+            temp->left = temp->right = NULL;
+            t->left = temp;
         }
         else insertItem(t->left, newItem);
     }
 
     else if (newItem > t->data) {
         if (t->right==NULL){
-
+            TreeNode *temp = new TreeNode;
+            temp->data = newItem;
+            temp->left = temp->right = NULL;
+            t->right = temp;
         }
         else insertItem(t->right, newItem);
     }
@@ -325,6 +335,13 @@ template<class ItemType>
 int BST_312 <ItemType>::countNodes(TreeNode* t) const
 {
     //YOUR CODE GOES HERE *******************************************************************************
+    //if current node is null, return 0
+    if (t==NULL) return 0;
+
+    else {
+        //returns 1 + the sum of the nodes to the left and to the right of the current node
+        return 1 + countNodes(t->left) + countNodes(t->right);
+    }
 
 }
 
@@ -333,7 +350,7 @@ template<class ItemType>
 int BST_312 <ItemType>::countNodes()
 {
     //YOUR CODE GOES HERE *******************************************************************************
-    countNodes(root);
+    return countNodes(root);
 
 }
 
@@ -341,6 +358,12 @@ template<class ItemType>
 void BST_312 <ItemType>::preOrderTraversal(TreeNode* t,vector<ItemType>& result) const
 {
     //YOUR CODE GOES HERE *******************************************************************************
+    if (t == NULL) return;
+    else{
+        result.push_back(t->data);
+        preOrderTraversal(t->left, result);
+        preOrderTraversal(t->right, result);
+    }
 }
 
 
@@ -348,7 +371,9 @@ template<class ItemType>
 vector<ItemType> BST_312 <ItemType>::preOrderTraversal()
 {
     //YOUR CODE GOES HERE *******************************************************************************
-
+    vector<ItemType> result;
+    preOrderTraversal(root, result);
+    return result;
 
 }
 
@@ -356,6 +381,12 @@ template<class ItemType>
 void BST_312 <ItemType>::inOrderTraversal(TreeNode* t,vector<ItemType>& result) const
 {
     //YOUR CODE GOES HERE *******************************************************************************
+    if (t == NULL) return;
+    else{
+        inOrderTraversal(t->left, result);
+        result.push_back(t->data);
+        inOrderTraversal(t->right, result);
+    }
 
 }
 
@@ -363,6 +394,9 @@ template<class ItemType>
 vector<ItemType> BST_312 <ItemType>::inOrderTraversal()
 {
     //YOUR CODE GOES HERE *******************************************************************************
+    vector<ItemType> result;
+    inOrderTraversal(root, result);
+    return result;
 }
 
 template<class ItemType>
@@ -370,19 +404,39 @@ void BST_312 <ItemType>::postOrderTraversal(TreeNode* t,vector<ItemType>& result
 {
 
     //YOUR CODE GOES HERE *******************************************************************************
+    if (t==NULL) return;
+    else{
+        postOrderTraversal(t->left, result);
+        postOrderTraversal(t->right, result);
+        result.push_back(t->data);
+    }
 }
 
 template<class ItemType>
 vector<ItemType> BST_312 <ItemType>::postOrderTraversal()
 {
     //YOUR CODE GOES HERE *******************************************************************************
+    vector<ItemType> result;
+    postOrderTraversal(root, result);
+    return result;
 }
 
 template<class ItemType>
 bool BST_312 <ItemType>::isItemInTree(const ItemType& item)
 {
-
     //YOUR CODE GOES HERE *******************************************************************************
+    TreeNode *temp;
+    temp = root;
+    while (temp != NULL){
+        if (temp->data == item) return true;
+        else if (item < temp->data) {
+            temp = temp->left;
+        }
+        else {
+            temp = temp->right;
+        }
+    }
+    return false;
 
 }
 #endif
